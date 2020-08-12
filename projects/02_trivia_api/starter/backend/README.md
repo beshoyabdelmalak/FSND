@@ -72,9 +72,12 @@ This README is missing documentation of your endpoints. Below is an example for 
 
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+DELETE '/questions/<int:question_id>'
+POST '/questions'
+POST '/questions/search'
+GET '/categories/<int:category_id>/questions'
+POST '/quizzes'
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
@@ -86,6 +89,108 @@ GET '/categories'
 '4' : "History",
 '5' : "Entertainment",
 '6' : "Sports"}
+
+GET '/questions'
+- Fetches a list of questions with the assoicated categories and the current category if available
+- Request Arguments: None
+- Returns: A list of questions, list of categories and current category
+{
+	'success' : True,
+	'questions': [
+		{
+			'id':1,
+			'question' : 'Which continent is the U.S located?',
+			'answer' : 'North America',
+			'category' : 'Geography',
+			'difficulty' : 2
+		},
+		{
+			'id':2,
+			'question' : 'Who won the fifa world cup in 2014?',
+			'answer' : 'Germany',
+			'category' : 'Sports',
+			'difficulty' : 4
+		}..
+	],
+	'categories' : ['Science', 'Sports', 'Geography'],
+	'total_num_questions' : 3,
+	'current_category' : ['Science', 'Sports', 'Geography']
+}
+
+Delete '/questions/<int:question_id>'
+- Deletes a question with a given id
+- Request Arguments: question_id
+- Returns: None
+{
+	'success' : True,
+	'message' : 'Question 1 deleted'
+}
+
+POST '/questions'
+- Creates a new question
+- Request Arguments: {'question' : '', 'answer':'', 'category':'', 'difficulty' : 2} as json
+- Returns: None
+{
+	'success' : True,
+	'message' : 'question was successfely added'
+}
+
+POST '/questions/search'
+- Searches for question with a given word
+- Request Arguments: {'query' : 'search-term'} as json 
+- Returns: A list of matched questions and the total number of them
+{
+	'success' : True,
+	'questions': [
+		{
+			'id':1,
+			'question' : 'Which continent is the U.S located?',
+			'answer' : 'North America',
+			'category' : 'Geography',
+			'difficulty' : 2
+		}
+	],
+	'total_num_questions' : 1
+}
+
+GET '/categories/<int:category_id>/questions'
+- Fetches all the question of a given category
+- Request Arguments: category_id
+- Returns: A list of matched questions, the total number of them and the category
+{
+	'success' : True,
+	'questions': [
+		{
+			'id':1,
+			'question' : 'Which continent is the U.S located?',
+			'answer' : 'North America',
+			'category' : 'Geography',
+			'difficulty' : 2
+		}
+	],
+	'total_num_questions' : 1,
+	'category' : 'Geography'
+}
+
+POST '/quizzes'
+- Gets a random question from a given category
+- Request Arguments: {
+	'category' : the given category of the quiz, could be all
+	'previous_questions' : list of all the previous question in order to get one new
+}
+- Returns: A question
+{
+	'success' : True,
+	'question': [
+		{
+			'id':1,
+			'question' : 'Which continent is the U.S located?',
+			'answer' : 'North America',
+			'category' : 'Geography',
+			'difficulty' : 2
+		}
+	]
+}
 
 ```
 
